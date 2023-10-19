@@ -1,0 +1,116 @@
+# https://iwkdqlzs8c.execute-api.us-east-1.amazonaws.com/gateway_prediction?nodeId=104&startTime=1692949317&endTime=1693294917
+
+# import requests
+# from google.cloud import translate_v2 as translate
+
+# # def fetch_data_from_api(api_url):
+# #     response = requests.get(api_url)
+# #     data = response.json()
+# #     return data['text_to_translate']
+
+# def fetch_data_from_api(api_url):
+#     response = requests.get(api_url)
+#     data = response.json()
+#     return data[2]['text_to_translate']  # Adjust the index as needed
+
+
+# def translate_text(text, target_language):
+#     client = translate.Client()
+#     translated_text = client.translate(text, target_language=target_language)
+#     return translated_text['translatedText']
+
+# api_url = "https://iwkdqlzs8c.execute-api.us-east-1.amazonaws.com/gateway_prediction?nodeId=104&startTime=1692949317&endTime=1693294917"
+# target_language = "fr"  # French
+
+# data_to_translate = fetch_data_from_api(api_url)
+# translated_text = translate_text(data_to_translate, target_language)
+# print(translated_text)
+
+
+
+
+# import requests
+
+# def fetch_data_from_api(api_url):
+#     response = requests.get(api_url)
+#     data = response.json()
+#     return data
+
+# api_url = "https://iwkdqlzs8c.execute-api.us-east-1.amazonaws.com/gateway_prediction?nodeId=104&startTime=1692949317&endTime=1693294917"  
+# json_data = fetch_data_from_api(api_url)
+# print(json_data)
+
+
+
+
+
+
+# import requests
+# import csv
+
+# def fetch_data_from_api(api_url):
+#     response = requests.get(api_url)
+#     data = response.json()
+#     return data
+
+# def convert_to_csv(json_data, csv_filename):
+#     with open(csv_filename, 'w', newline='') as csv_file:
+#         fieldnames = ['ActivityLabel', 'TimeStamp', 'NodeId']
+#         csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+#         csv_writer.writeheader()
+#         csv_writer.writerows(json_data)
+
+# api_url = "https://iwkdqlzs8c.execute-api.us-east-1.amazonaws.com/gateway_prediction?nodeId=104&startTime=1692949317&endTime=1693294917" 
+# json_data = fetch_data_from_api(api_url)
+
+# csv_filename = "output.csv"
+# convert_to_csv(json_data, csv_filename)
+# print("CSV file created:", csv_filename)
+
+
+
+
+
+
+
+
+
+import requests
+import csv
+from googletrans import Translator
+
+def fetch_data_from_api(api_url):
+    response = requests.get(api_url)
+    data = response.json()
+    return data
+
+def translate_data(data, target_language):
+    translator = Translator()
+    translated_data = []
+    for item in data:
+        translated_item = {
+            'ActivityLabel': translator.translate(item['ActivityLabel'], dest=target_language).text,
+            'TimeStamp': translator.translate(item['TimeStamp'], dest=target_language).text,
+            'NodeId': translator.translate(item['NodeId'], dest=target_language).text
+        }
+        translated_data.append(translated_item)
+    return translated_data
+
+def convert_to_csv(data, csv_filename):
+    with open(csv_filename, 'w', newline='') as csv_file:
+        fieldnames = ['ActivityLabel', 'TimeStamp', 'NodeId']
+        csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        csv_writer.writeheader()
+        csv_writer.writerows(data)
+
+
+api_url = "https://iwkdqlzs8c.execute-api.us-east-1.amazonaws.com/gateway_prediction?nodeId=104&startTime=1692949317&endTime=1693294917"  
+json_data = fetch_data_from_api(api_url)
+
+
+target_language = "fr" 
+translated_data = translate_data(json_data, target_language)
+
+csv_filename = "output.csv"
+convert_to_csv(translated_data, csv_filename)
+print("CSV file created:", csv_filename)

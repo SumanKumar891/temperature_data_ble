@@ -1,0 +1,43 @@
+{
+  "welcome_message": "Mooofarm, Dairy ka kaam asaan kare",
+  "continue_button": "Continue",
+
+  "login_page_welcome" : "Welcome to Mooofarm",
+  "enter_Farmer_ID" : "Enter Farmer ID",
+  "enter_password" : "Enter Password",
+  "login" : "Login",
+  "register" : "Register",
+  "enter_name" : "Enter Name",
+  "set_farmer_id" : "Set User ID/Farmer ID",
+  "set_Password" : "Set Password", 
+  "re_enter_passwd" : "Re-enter Password",
+  "forget_passwd" : "Forget Password",
+  "cow_id" : "Cow ID",
+  "click_here" : "Click Here",
+  "submit" : "Submit",
+  "select_start_epoch" : "Select start date & time",
+  "select_end_epoch" : "Select end date & time",
+  "cow_activity_data" : "Cow Activity Data",
+  "start_timestamp" : "Start Time",
+  "end_timestamp" : "End Time",
+  "activity" : "Activity",
+  "fetched_data" : "Fetched Data",
+  "my_cows" : "MY ALL COWS",
+  "page" : "Page",
+
+  "res": "Resting in standing",
+  "rus" : "ruminating in standing",
+  "mov": "Moving",
+  "fep": "Feeding",
+  "drn" : "Drinking",
+  "lck": "Licking",
+  "rel": "Resting in lying",
+  "uri": "Urinating",
+  "def" : "Defecating",
+  "att" : "Attacking"
+
+    
+
+
+
+}
