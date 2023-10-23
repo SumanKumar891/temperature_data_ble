@@ -89,45 +89,86 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
           // Text input for NodeID in a Card
-          Card(
-          elevation: 5,
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: nodeIDController,
-                    decoration: InputDecoration(labelText: 'Enter Node ID'),
+        //   Card(
+        //   elevation: 5,
+        //   color: Colors.white,
+        //   shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(10.0),
+        //   ),
+        //   child: Padding(
+        //     padding: const EdgeInsets.all(8.0),
+        //     child: Row(
+        //       children: [
+        //         Expanded(
+        //           child: TextField(
+        //             controller: nodeIDController,
+        //             decoration: InputDecoration(labelText: 'Enter Node ID'),
+        //           ),
+        //         ),
+        //         TextButton(
+        //           onPressed: () {
+        //             setState(() {
+        //               nodeID = nodeIDController.text;
+        //               print('NodeID: $nodeID'); // Print the inputted NodeID to the console
+        //             });
+        //           },
+        //
+        //           child: Text(
+        //             'Enter',
+        //             style: TextStyle(
+        //               color: Colors.green, // Change font color to white
+        //               //fontStyle: FontStyle.italic, // Make the text italic
+        //               fontWeight: FontWeight.bold,
+        //               fontSize:16// Make the text bold
+        //             ),
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //
+        //   ),
+        // ),
+            Card(
+              elevation: 5,
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.5, // Adjust the fraction as needed
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: nodeIDController,
+                          decoration: InputDecoration(labelText: 'Enter Node ID'),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            nodeID = nodeIDController.text;
+                            print('NodeID: $nodeID');
+                          });
+                        },
+                        child: Text(
+                          'Enter',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      nodeID = nodeIDController.text;
-                      print('NodeID: $nodeID'); // Print the inputted NodeID to the console
-                    });
-                  },
-                  child: Text(
-                    'Enter',
-                    style: TextStyle(
-                      color: Colors.green, // Change font color to white
-                      //fontStyle: FontStyle.italic, // Make the text italic
-                      fontWeight: FontWeight.bold,
-                      fontSize:16// Make the text bold
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
 
-          ),
-        ),
-        SizedBox(height:20),
+            SizedBox(height:20),
         // Floating Widgets
         // Row(
         //   mainAxisAlignment: MainAxisAlignment.center,
@@ -152,28 +193,59 @@ class _MyHomePageState extends State<MyHomePage> {
                 // Add some spacing between widgets
                 SizedBox(width: 20.0),
                 // Display the 'Time' in a plain container
-                Container(
-                  child: FutureBuilder<String>(
-                    future: fetchDataFromAPI(), // Fetch data from the API
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        // Data has been fetched, convert to human-readable format
-                        final data = snapshot.data;
-                        final timeInHumanFormat = _epochToHumanReadable(data);
+                // Container(
+                //   child: FutureBuilder<String>(
+                //     future: fetchDataFromAPI(), // Fetch data from the API
+                //     builder: (context, snapshot) {
+                //       if (snapshot.connectionState == ConnectionState.done) {
+                //         // Data has been fetched, convert to human-readable format
+                //         final data = snapshot.data;
+                //         final timeInHumanFormat = _epochToHumanReadable(data);
+                //
+                //         return Text(
+                //           'Time: $timeInHumanFormat',
+                //           style: TextStyle(
+                //             fontSize: 16, // Adjust font size as needed
+                //           ),
+                //         );
+                //       } else {
+                //         // Data is still loading
+                //         return CircularProgressIndicator();
+                //       }
+                //     },
+                //   ),
+                // ),
+                Card(
+                  elevation: 5,
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: FutureBuilder<String>(
+                      future: fetchDataFromAPI(), // Fetch data from the API
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          // Data has been fetched, convert to human-readable format
+                          final data = snapshot.data;
+                          final timeInHumanFormat = _epochToHumanReadable(data);
 
-                        return Text(
-                          'Time: $timeInHumanFormat',
-                          style: TextStyle(
-                            fontSize: 16, // Adjust font size as needed
-                          ),
-                        );
-                      } else {
-                        // Data is still loading
-                        return CircularProgressIndicator();
-                      }
-                    },
+                          return Text(
+                            'Time: $timeInHumanFormat',
+                            style: TextStyle(
+                              fontSize: 16, // Adjust font size as needed
+                            ),
+                          );
+                        } else {
+                          // Data is still loading
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    ),
                   ),
                 ),
+
               ],
             ),
 

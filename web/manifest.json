@@ -1,6 +1,6 @@
 {
-    "name": "test_web_app",
-    "short_name": "test_web_app",
+    "name": "temp_humid",
+    "short_name": "temp_humid",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

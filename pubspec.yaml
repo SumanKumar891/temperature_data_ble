@@ -129,9 +129,9 @@ flutter:
   assets:
     #- assets/images/background.jpeg
     - assets/images/
-    - assets/en.json
-    - assets/hi.json
-    - assets/pa.json
+    # - assets/en.json
+    # - assets/hi.json
+    # - assets/pa.json
     #- google_fonts/
     #- assets/images/logo2.jpeg
   # assets:
