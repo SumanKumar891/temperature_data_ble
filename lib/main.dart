@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,63 +24,83 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<String> fetchDataFromAPI() async {
-    final response = await http.get(Uri.parse(apiEndpoint));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
+  String nodeID = '';
+  final TextEditingController nodeIDController = TextEditingController();
 
-  // String _epochToHumanReadable(String epochTime) {
-  //   final dateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(epochTime) * 1000);
-  //   final formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
-  //   return formatter.format(dateTime);
-  // }
+  String temperature = '';
+  String humidity = '';
+  String time = '';
 
-
-  String? _epochToHumanReadable(String? epochTime) {
+  String _epochToHumanReadable(String? epochTime) {
     if (epochTime != null) {
-      final dateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(epochTime) * 1000);
+      final dateTime =
+          DateTime.fromMillisecondsSinceEpoch(int.parse(epochTime) * 1000);
       final formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
       return formatter.format(dateTime);
     }
-    return null; // Return null if epochTime is null
+    return '';
   }
 
+  Future<void> fetchDataFromAPI() async {
+    try {
+      final response = await http.get(Uri.parse('$apiEndpoint?nodeId=$nodeID'));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          temperature = data['temperature'];
+          humidity = data['humidity'];
+          time = _epochToHumanReadable(data['timestamp']);
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      // Handle the exception here (e.g., show an error message)
+      print('Error: $e');
+    }
+  }
 
   // Example API endpoint
-  final String apiEndpoint = 'https://api.example.com/data';
+  final String apiEndpoint =
+      'https://gdp1cq3yna.execute-api.us-east-1.amazonaws.com/temprature_sensor_data_api';
 
-  String nodeID = ''; // Variable to store the user input
-  final TextEditingController nodeIDController = TextEditingController();
+  // Timer? _timer;
 
-  @override
-  void dispose() {
-    nodeIDController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   // Set up a timer to call the API every 1 minute
+  //   _timer = Timer.periodic(Duration(minutes: 1), (timer) {
+  //     fetchDataFromAPI();
+  //   });
+  // }
+
+  // @override
+  // void dispose() {
+  //   _timer?.cancel(); // Cancel the timer
+  //   nodeIDController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      AppBar(
+      appBar: AppBar(
         title: Row(
           children: [
             ColorFiltered(
               colorFilter: ColorFilter.mode(
-                Colors.black, // Set the desired color (in this case, green)
-                BlendMode.colorDodge, // Apply color blending mode
+                Colors.black,
+                BlendMode.colorDodge,
               ),
               child: Image.asset(
-                'assets/images/awadhlogo.png', // Replace with the path to your image asset
-                width: 70, // Adjust the width as needed
-                height: 70, // Adjust the height as needed
+                'assets/images/awadhlogo.png',
+                width: 70,
+                height: 70,
               ),
             ),
-            SizedBox(width: 8), // Add some spacing between the image and the title
+            SizedBox(width: 8),
             Text('Temperature Sensor Data'),
           ],
         ),
@@ -88,46 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          // Text input for NodeID in a Card
-        //   Card(
-        //   elevation: 5,
-        //   color: Colors.white,
-        //   shape: RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.circular(10.0),
-        //   ),
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(8.0),
-        //     child: Row(
-        //       children: [
-        //         Expanded(
-        //           child: TextField(
-        //             controller: nodeIDController,
-        //             decoration: InputDecoration(labelText: 'Enter Node ID'),
-        //           ),
-        //         ),
-        //         TextButton(
-        //           onPressed: () {
-        //             setState(() {
-        //               nodeID = nodeIDController.text;
-        //               print('NodeID: $nodeID'); // Print the inputted NodeID to the console
-        //             });
-        //           },
-        //
-        //           child: Text(
-        //             'Enter',
-        //             style: TextStyle(
-        //               color: Colors.green, // Change font color to white
-        //               //fontStyle: FontStyle.italic, // Make the text italic
-        //               fontWeight: FontWeight.bold,
-        //               fontSize:16// Make the text bold
-        //             ),
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //
-        //   ),
-        // ),
             Card(
               elevation: 5,
               color: Colors.white,
@@ -135,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.5, // Adjust the fraction as needed
+                width: MediaQuery.of(context).size.width * 0.5,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -143,15 +124,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       Expanded(
                         child: TextField(
                           controller: nodeIDController,
-                          decoration: InputDecoration(labelText: 'Enter Node ID'),
+                          decoration:
+                              InputDecoration(labelText: 'Enter Node ID'),
                         ),
                       ),
                       TextButton(
                         onPressed: () {
                           setState(() {
                             nodeID = nodeIDController.text;
-                            print('NodeID: $nodeID');
                           });
+                          fetchDataFromAPI();
                         },
                         child: Text(
                           'Enter',
@@ -167,54 +149,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-
-            SizedBox(height:20),
-        // Floating Widgets
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-        //     // FloatingWidget(
-        //     //   apiEndpoint: apiEndpoint,
-        //     //   title: 'NodeID',
-        //     //   data: nodeID,
-        //     // ),
-        //     SizedBox(width: 20.0), // Gap between widgets
-        //     FloatingWidget(
-        //       apiEndpoint: apiEndpoint,
-        //       title: 'Time',
-        //       isTimeCard: true,
-        //
-        //     ),
-        //   ],
-        // ),
+            SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Add some spacing between widgets
-                SizedBox(width: 20.0),
-                // Display the 'Time' in a plain container
-                // Container(
-                //   child: FutureBuilder<String>(
-                //     future: fetchDataFromAPI(), // Fetch data from the API
-                //     builder: (context, snapshot) {
-                //       if (snapshot.connectionState == ConnectionState.done) {
-                //         // Data has been fetched, convert to human-readable format
-                //         final data = snapshot.data;
-                //         final timeInHumanFormat = _epochToHumanReadable(data);
-                //
-                //         return Text(
-                //           'Time: $timeInHumanFormat',
-                //           style: TextStyle(
-                //             fontSize: 16, // Adjust font size as needed
-                //           ),
-                //         );
-                //       } else {
-                //         // Data is still loading
-                //         return CircularProgressIndicator();
-                //       }
-                //     },
-                //   ),
-                // ),
                 Card(
                   elevation: 5,
                   color: Colors.white,
@@ -223,49 +161,28 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   child: Container(
                     padding: EdgeInsets.all(8.0),
-                    child: FutureBuilder<String>(
-                      future: fetchDataFromAPI(), // Fetch data from the API
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          // Data has been fetched, convert to human-readable format
-                          final data = snapshot.data;
-                          final timeInHumanFormat = _epochToHumanReadable(data);
-
-                          return Text(
-                            'Time: $timeInHumanFormat',
-                            style: TextStyle(
-                              fontSize: 16, // Adjust font size as needed
-                            ),
-                          );
-                        } else {
-                          // Data is still loading
-                          return CircularProgressIndicator();
-                        }
-                      },
-                    ),
+                    child: Text('Time: $time'),
                   ),
                 ),
-
               ],
             ),
-
-            SizedBox(height: 20.0), // Gap between rows
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FloatingWidget(
-              apiEndpoint: apiEndpoint,
-              title: 'Temperature in Celsius',
-              isTemperatureCard: true,
+            SizedBox(height: 20.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingWidget(
+                  data: temperature,
+                  title: 'Temperature(°C)',
+                  isTemperatureCard: true,
+                ),
+                SizedBox(width: 20.0),
+                FloatingWidget(
+                  data: humidity,
+                  title: 'Humidity in %',
+                  isHumidityCard: true,
+                ),
+              ],
             ),
-            SizedBox(width: 20.0), // Gap between widgets
-            FloatingWidget(
-              apiEndpoint: apiEndpoint,
-              title: 'Humidity in %',
-              isHumidityCard: true,
-            ),
-          ],
-        ),
           ],
         ),
       ),
@@ -274,20 +191,16 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class FloatingWidget extends StatefulWidget {
-  final String apiEndpoint;
+  final String data;
   final String title;
-  final bool isTimeCard;
   final bool isTemperatureCard;
   final bool isHumidityCard;
-  String data;
 
   FloatingWidget({
-    required this.apiEndpoint,
+    required this.data,
     required this.title,
-    this.isTimeCard = false,
     this.isTemperatureCard = false,
     this.isHumidityCard = false,
-    this.data = '',
   });
 
   @override
@@ -298,40 +211,13 @@ class _FloatingWidgetState extends State<FloatingWidget> {
   @override
   void initState() {
     super.initState();
-    fetchData();
-  }
-
-  void fetchData() async {
-    // Fetch data from the API or use the provided data
-    final result = widget.isTimeCard
-        ? _epochToHumanReadable(widget.data)
-        : widget.data;
-
-    setState(() {
-      widget.data = result;
-    });
-  }
-
-  Future<String?> fetchDataFromAPI() async {
-    final response = await http.get(Uri.parse(widget.apiEndpoint));
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
-
-  String _epochToHumanReadable(String epochTime) {
-    final dateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(epochTime) * 1000);
-    final formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
-    return formatter.format(dateTime);
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5, // Add a shadow effect
-      color: Colors.white, // White background
+      elevation: 5,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
