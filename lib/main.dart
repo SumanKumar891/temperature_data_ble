@@ -41,9 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return '';
   }
 
-  Future<void> fetchDataFromAPI() async {
+  Future<void> fetchDataFromAPI(String nodeId) async {
     try {
-      final response = await http.get(Uri.parse('$apiEndpoint?nodeId=$nodeID'));
+      final response = await http.get(
+          Uri.parse('$apiEndpoint?nodeId=$nodeId')); // Use the passed nodeId
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
@@ -76,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _startTimer() {
     const duration = Duration(seconds: 10);
     _timer = Timer.periodic(duration, (timer) {
-      fetchDataFromAPI();
+      fetchDataFromAPI(nodeID); // Call API with the stored nodeID
     });
   }
 
@@ -129,8 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Expanded(
                         child: TextField(
                           controller: nodeIDController,
-                          decoration:
-                          InputDecoration(labelText: 'Enter Node ID'),
+                          decoration: InputDecoration(labelText: 'Enter Node ID'),
                         ),
                       ),
                       TextButton(
@@ -138,12 +138,25 @@ class _MyHomePageState extends State<MyHomePage> {
                           setState(() {
                             nodeID = nodeIDController.text;
                           });
-                          fetchDataFromAPI();
                         },
                         child: Text(
                           'Enter',
                           style: TextStyle(
                             color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Refresh button pressed, call API with the entered nodeID
+                          fetchDataFromAPI(nodeID);
+                        },
+                        child: Text(
+                          'Refresh',
+                          style: TextStyle(
+                            color: Colors.blue,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
@@ -194,7 +207,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
 
 class FloatingWidget extends StatefulWidget {
   final String data;
