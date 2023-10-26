@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _epochToHumanReadable(String? epochTime) {
     if (epochTime != null) {
       final dateTime =
-          DateTime.fromMillisecondsSinceEpoch(int.parse(epochTime) * 1000);
+      DateTime.fromMillisecondsSinceEpoch(int.parse(epochTime) * 1000);
       final formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
       return formatter.format(dateTime);
     }
@@ -60,28 +60,33 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  // Example API endpoint
   final String apiEndpoint =
       'https://gdp1cq3yna.execute-api.us-east-1.amazonaws.com/temprature_sensor_data_api';
 
-  // Timer? _timer;
+  Timer? _timer;
 
-  // @override
-  // void initState() {
-  //   super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-  //   // Set up a timer to call the API every 1 minute
-  //   _timer = Timer.periodic(Duration(minutes: 1), (timer) {
-  //     fetchDataFromAPI();
-  //   });
-  // }
+    // Start the timer when the widget is initialized
+    _startTimer();
+  }
 
-  // @override
-  // void dispose() {
-  //   _timer?.cancel(); // Cancel the timer
-  //   nodeIDController.dispose();
-  //   super.dispose();
-  // }
+  void _startTimer() {
+    const duration = Duration(seconds: 10);
+    _timer = Timer.periodic(duration, (timer) {
+      fetchDataFromAPI();
+    });
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed
+    _timer?.cancel();
+    nodeIDController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: TextField(
                           controller: nodeIDController,
                           decoration:
-                              InputDecoration(labelText: 'Enter Node ID'),
+                          InputDecoration(labelText: 'Enter Node ID'),
                         ),
                       ),
                       TextButton(
@@ -189,6 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
 
 class FloatingWidget extends StatefulWidget {
   final String data;
