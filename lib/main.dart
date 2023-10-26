@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.5,
+                width: MediaQuery.of(context).size.width * 0.7,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text(
                           'Refresh',
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.red,
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
