@@ -23,6 +23,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController gatewayIdController = TextEditingController();
   TextEditingController nodeIdController = TextEditingController();
@@ -31,6 +32,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   DateTime? _selectedStartDate;
   DateTime? _selectedEndDate;
+  int? _epochStartTime;
+  int? _epochEndTime;
+
   Future<void> _selectStartDate(BuildContext context) async {
     DateTime currentDate = DateTime.now();
 
@@ -60,8 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
         setState(() {
           _selectedStartDate = combinedDateTime;
+          _epochStartTime = (combinedDateTime.millisecondsSinceEpoch ~/ 1000);
           startTimeController.text =
-              (_selectedStartDate!.millisecondsSinceEpoch ~/ 1000).toString();
+              DateFormat('yyyy-MM-dd HH:mm').format(combinedDateTime);
         });
       }
     }
@@ -96,19 +101,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
         setState(() {
           _selectedEndDate = combinedDateTime;
+          _epochEndTime = (combinedDateTime.millisecondsSinceEpoch ~/ 1000);
           endTimeController.text =
-              (_selectedEndDate!.millisecondsSinceEpoch ~/ 1000).toString();
+              DateFormat('yyyy-MM-dd HH:mm').format(combinedDateTime);
         });
       }
     }
   }
 
-
   void fetchData() async {
     String nodeId = nodeIdController.text;
     String gatewayId = gatewayIdController.text;
-    String startTime = startTimeController.text;
-    String endTime = endTimeController.text;
+    String startTime = _epochStartTime?.toString() ?? '';
+    String endTime = _epochEndTime?.toString() ?? '';
 
     String url =
         'https://gjehwqgnii.execute-api.us-east-1.amazonaws.com/latest/data?nodeId=$nodeId&gatewayId=$gatewayId&starttime=$startTime&endtime=$endTime';
@@ -138,81 +143,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen size
     Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-
-
       appBar: AppBar(
         title: Text(
           'Weather Data',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 30, // Adjust the font size as needed
-          ),),
+            fontSize: 30,
+          ),
+        ),
       ),
-
-
-      // body: Center(
-      //   child: Card(
-      //     elevation: 5,
-      //     // Set width to 80% of the screen width
-      //     // Set height to 60% of the screen height
-      //     child: Container(
-      //       width: screenSize.width * 0.8,
-      //       height: screenSize.height * 0.6,
-      //       padding: const EdgeInsets.all(16.0),
-      //       child: Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         mainAxisAlignment: MainAxisAlignment.center,
-      //         children: [
-      //           TextField(
-      //             controller: gatewayIdController,
-      //             decoration: InputDecoration(labelText: 'Enter Gateway ID'),
-      //           ),
-      //           TextField(
-      //             controller: nodeIdController,
-      //             decoration: InputDecoration(labelText: 'Enter Node ID'),
-      //           ),
-      //           TextField(
-      //             controller: startTimeController,
-      //             decoration: InputDecoration(labelText: 'Enter Start Time'),
-      //             onTap: () => _selectStartDate(context),
-      //           ),
-      //           TextField(
-      //             controller: endTimeController,
-      //             decoration: InputDecoration(labelText: 'Enter End Time'),
-      //             onTap: () => _selectEndDate(context),
-      //           ),
-      //           SizedBox(height: 16),
-      //           Center(
-      //             child: ElevatedButton(
-      //               onPressed: fetchData,
-      //               child: Text('Submit'),
-      //               style: ElevatedButton.styleFrom(
-      //                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      //                 textStyle: TextStyle(fontSize: 18),
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // )
-
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/weather.png', // Change this to your actual image path
+              'assets/images/weather.png',
               width: 500,
               height: 200,
             ),
-             // Add some space between the image and the card
             Card(
               elevation: 5,
               child: Container(
@@ -233,13 +184,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     TextField(
                       controller: startTimeController,
-                      decoration: InputDecoration(labelText: 'Enter Start Time'),
+                      decoration: InputDecoration(labelText: 'Enter Start Date & Time'),
                       onTap: () => _selectStartDate(context),
+                      readOnly: true,
                     ),
                     TextField(
                       controller: endTimeController,
-                      decoration: InputDecoration(labelText: 'Enter End Time'),
+                      decoration: InputDecoration(labelText: 'Enter End Date & Time'),
                       onTap: () => _selectEndDate(context),
+                      readOnly: true,
                     ),
                     SizedBox(height: 16),
                     Center(
@@ -249,11 +202,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                           textStyle: TextStyle(fontSize: 18),
-                          primary: Colors.white, // Set the primary color to red
-                          side: BorderSide(color: Colors.red, width: 2.0), // Set the white border
+                          primary: Colors.white,
+                          side: BorderSide(color: Colors.red, width: 2.0),
                         ),
                       ),
-
                     ),
                   ],
                 ),
@@ -262,15 +214,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-
-
-
-
-
     );
   }
 }
-
 
 
 class SecondPage extends StatelessWidget {
