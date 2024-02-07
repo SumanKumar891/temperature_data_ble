@@ -35,67 +35,70 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildCardWithImage(
-                  context,
-                  'Farmer Input',
-                  './../assets/assets/images/farmer_input.jpg', // Farmer image asset path
-                  () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FarmerInput()),
-                    );
-                  },
-                ),
-                SizedBox(width: 16), // Add spacing between cards
-                buildCardWithImage(
-                  context,
-                  'Weather Data',
-                  './../assets/assets/images/weather_data.jpg', // Weather image asset path
-                  () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => WeatherData()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 16), // Add spacing between rows
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildCardWithImage(
-                  context,
-                  'Page 3',
-                  './../assets/assets/images/weather_data.jpg', // Page 3 image asset path
-                  () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Page3()),
-                    );
-                  },
-                ),
-                SizedBox(width: 16), // Add spacing between cards
-                buildCardWithImage(
-                  context,
-                  'Page 4',
-                  './../assets/assets/images/weather_data.jpg', // Page 4 image asset path
-                  () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Page4()),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildCardWithImage(
+                    context,
+                    'Farmer Input',
+                    './../assets/assets/images/farmer_input.jpg', // Farmer image asset path
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FarmerInput()),
+                      );
+                    },
+                  ),
+                  SizedBox(width: 16), // Add spacing between cards
+                  buildCardWithImage(
+                    context,
+                    'Weather Data',
+                    './../assets/assets/images/weather_data.jpg', // Weather image asset path
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => WeatherData()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 16), // Add spacing between rows
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildCardWithImage(
+                    context,
+                    'Page 3',
+                    './../assets/assets/images/weather_data.jpg', // Page 3 image asset path
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Page3()),
+                      );
+                    },
+                  ),
+                  SizedBox(width: 16), // Add spacing between cards
+                  buildCardWithImage(
+                    context,
+                    'Page 4',
+                    './../assets/assets/images/weather_data.jpg', // Page 4 image asset path
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Page4()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -133,8 +136,8 @@ class HomePage extends StatelessWidget {
       String imagePath, Function() onPressed) {
     return InkWell(
       child: Container(
-        height: 200, // Increased height to accommodate image and button
-        width: 200,
+        height: 180, // Increased height to accommodate image and button
+        width: 180,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -152,7 +155,7 @@ class HomePage extends StatelessWidget {
           children: [
             Image.asset(
               imagePath,
-              height: 120, // Adjust image height as needed
+              height: 110, // Adjust image height as needed
             ),
             SizedBox(height: 16),
             ElevatedButton(

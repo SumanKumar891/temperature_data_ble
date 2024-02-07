@@ -224,7 +224,7 @@ class _FarmerInputState extends State<FarmerInput> {
                   //   onPressed: _uploadImage,
                   //   child: Text('Upload Image (Web)'),
                   // ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
                   _imagePath != null
                       ? Image.network(
                           _imagePath!,
