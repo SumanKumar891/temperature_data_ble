@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'farmer_input.dart'; // Import the FarmerInput widget
-import 'weather_data.dart'; // Import the WeatherData widget
-import 'page3.dart'; // Import the Page3 widget
-import 'page4.dart'; // Import the Page4 widget
 
 class HomePage extends StatelessWidget {
   @override
@@ -48,10 +44,11 @@ class HomePage extends StatelessWidget {
                     'Farmer Input',
                     './../assets/assets/images/farmer_input.jpg', // Farmer image asset path
                     () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FarmerInput()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => FarmerInput()),
+                      // );
+                      Navigator.pushNamed(context, '/farmer_input');
                     },
                   ),
                   SizedBox(width: 16), // Add spacing between cards
@@ -60,10 +57,11 @@ class HomePage extends StatelessWidget {
                     'Weather Data',
                     './../assets/assets/images/weather_data.jpg', // Weather image asset path
                     () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => WeatherData()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => WeatherData()),
+                      // );
+                      Navigator.pushNamed(context, '/weather_data');
                     },
                   ),
                 ],
@@ -74,13 +72,15 @@ class HomePage extends StatelessWidget {
                 children: [
                   buildCardWithImage(
                     context,
-                    'Page 3',
+                    'Farmer Queries',
                     './../assets/assets/images/weather_data.jpg', // Page 3 image asset path
                     () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Page3()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => FarmerQueriesPage()),
+                      // );
+                      Navigator.pushNamed(context, '/farmer_queries');
                     },
                   ),
                   SizedBox(width: 16), // Add spacing between cards
@@ -89,10 +89,11 @@ class HomePage extends StatelessWidget {
                     'Page 4',
                     './../assets/assets/images/weather_data.jpg', // Page 4 image asset path
                     () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Page4()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => Page4()),
+                      // );
+                      Navigator.pushNamed(context, '/page_4');
                     },
                   ),
                 ],
