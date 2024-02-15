@@ -1,0 +1,1 @@
+ C:\\Users\\gyane\\Downloads\\temperature_data_ble\\.dart_tool\\flutter_build\\d35b2358ae4fd864f2996883e52ea39d\\native_assets.yaml: 
