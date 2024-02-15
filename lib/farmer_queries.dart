@@ -82,52 +82,58 @@ class _FarmerQueriesPageState extends State<FarmerQueriesPage> {
 
   Widget _buildQueryCard(Map<String, dynamic> query) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9, // Adjust as needed
       margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              title: Text(
-                'Name: ${query['Name']['S']}',
-                style: TextStyle(fontWeight: FontWeight.bold),
+      child: SizedBox(
+        width: 300,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                title: Text(
+                  'Name: ${query['Name']['S']}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text('Posted on: ${query['TriggerTime']['S']}'),
               ),
-              subtitle: Text('Posted on: ${query['TriggerTime']['S']}'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Problem: ${query['ProblemStatement']['S']}'),
-                  SizedBox(height: 8.0),
-                  Text('Location: ${query['Location']['S']}'),
-                  SizedBox(height: 8.0),
-                  GestureDetector(
-                    onTap: () => _launchPhoneCall(query['ContactNumber']['S']),
-                    child: Text(
-                      'Contact: ${query['ContactNumber']['S']}',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Problem: ${query['ProblemStatement']['S']}'),
+                    SizedBox(height: 8.0),
+                    Text('Location: ${query['Location']['S']}'),
+                    SizedBox(height: 8.0),
+                    GestureDetector(
+                      onTap: () =>
+                          _launchPhoneCall(query['ContactNumber']['S']),
+                      child: Text(
+                        'Contact: ${query['ContactNumber']['S']}',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 8.0),
-                  if (query['ImagePath'] != null &&
-                      query['ImagePath']['S'] != null)
-                    Image.network(
-                      query['ImagePath']['S'],
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
-                  SizedBox(height: 8.0),
-                ],
+                    SizedBox(height: 8.0),
+                    if (query['ImagePath'] != null &&
+                        query['ImagePath']['S'] != null)
+                      Image.network(
+                        query['ImagePath']['S'],
+                        width: double.infinity,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                    SizedBox(height: 8.0),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
