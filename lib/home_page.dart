@@ -8,15 +8,13 @@ class HomePage extends StatelessWidget {
         title: Text('Home'),
         actions: [
           Container(
-            margin: EdgeInsets.only(right: 16), // Add margin to the right
+            margin: EdgeInsets.only(right: 16),
             child: TextButton(
               onPressed: () {
-                // Implement logout functionality here
                 Navigator.popUntil(context, ModalRoute.withName('/'));
               },
               style: TextButton.styleFrom(
-                backgroundColor:
-                    Colors.blue, // Set background color of the button
+                backgroundColor: Colors.blue,
               ),
               child: Text(
                 'Logout',
@@ -33,60 +31,50 @@ class HomePage extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("./../assets/assets/images/background.png"),
+            image:
+                AssetImage("./../assets/assets/images/farmer_background.jpg"),
             fit: BoxFit.cover,
           ),
         ),
         child: Center(
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 20, // Add spacing between cards
+              runSpacing: 20, // Add spacing between rows
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    buildCardWithImage(
-                      context,
-                      'Farmer Input',
-                      'assets/images/farmer_input.jpg', // Farmer image asset path
-                      () {
-                        Navigator.pushNamed(context, '/farmer_input');
-                      },
-                    ),
-                    SizedBox(width: 20), // Add spacing between cards
-                    buildCardWithImage(
-                      context,
-                      'Weather Data',
-                      'assets/images/weather_data.jpg', // Weather image asset path
-                      () {
-                        Navigator.pushNamed(context, '/weather_data');
-                      },
-                    ),
-                  ],
+                buildCardWithImage(
+                  context,
+                  'Farmer Input',
+                  'assets/images/farmer_input.jpg',
+                  () {
+                    Navigator.pushNamed(context, '/farmer_input');
+                  },
                 ),
-                SizedBox(height: 20), // Add spacing between rows
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    buildCardWithImage(
-                      context,
-                      'Farmer Queries',
-                      'assets/images/query.jpg', // Page 3 image asset path
-                      () {
-                        Navigator.pushNamed(context, '/farmer_queries');
-                      },
-                    ),
-                    SizedBox(width: 20), // Add spacing between cards
-                    buildCardWithImage(
-                      context,
-                      'Contact Us',
-                      'assets/images/contact.jpg', // Page 4 image asset path
-                      () {
-                        Navigator.pushNamed(context, '/page_4');
-                      },
-                    ),
-                  ],
+                buildCardWithImage(
+                  context,
+                  'Weather Data',
+                  'assets/images/weather_data.jpg',
+                  () {
+                    Navigator.pushNamed(context, '/weather_data');
+                  },
+                ),
+                buildCardWithImage(
+                  context,
+                  'Farmer Queries',
+                  'assets/images/query.jpg',
+                  () {
+                    Navigator.pushNamed(context, '/farmer_queries');
+                  },
+                ),
+                buildCardWithImage(
+                  context,
+                  'Contact Us',
+                  'assets/images/contact.jpg',
+                  () {
+                    Navigator.pushNamed(context, '/page_4');
+                  },
                 ),
               ],
             ),
@@ -100,17 +88,17 @@ class HomePage extends StatelessWidget {
       String imagePath, Function() onPressed) {
     return InkWell(
       child: Container(
-        height: 230, // Increased height to accommodate image and button
-        width: 250,
+        height: 250, // Adjust card height as needed
+        width: 250, // Adjust card width as needed
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.white.withOpacity(0.5),
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: Offset(0, 3),
             ),
           ],
         ),
@@ -121,16 +109,18 @@ class HomePage extends StatelessWidget {
             Image.asset(
               imagePath,
               height: 140, // Adjust image height as needed
-              // fit: BoxFit.cover,
             ),
             SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // background (button) color
-                foregroundColor: Colors.white,
+                primary: Colors.transparent,
+                onPrimary: Colors.blue,
               ),
               onPressed: onPressed,
-              child: Text(buttonText),
+              child: Text(
+                buttonText,
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),

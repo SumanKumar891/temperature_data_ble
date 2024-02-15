@@ -67,16 +67,26 @@ class _FarmerQueriesPageState extends State<FarmerQueriesPage> {
       appBar: AppBar(
         title: Text('Farmer Queries'),
       ),
-      body: loader
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: _queries.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _buildQueryCard(_queries[index]);
-              },
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/farmer_query_bg.jpg', // Replace with your background image path
+              fit: BoxFit.cover,
             ),
+          ),
+          Center(
+            child: loader
+                ? CircularProgressIndicator()
+                : ListView.builder(
+                    itemCount: _queries.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _buildQueryCard(_queries[index]);
+                    },
+                  ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -86,6 +96,8 @@ class _FarmerQueriesPageState extends State<FarmerQueriesPage> {
       child: SizedBox(
         width: 300,
         child: Card(
+          color:
+              Colors.white.withOpacity(0.7), // Set semi-transparent white color
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),

@@ -5,24 +5,48 @@ class Page4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact'),
+        title: Text('Contacts'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 20),
-            Container(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/contact_background.jpg', // Replace with your background image path
+              fit: BoxFit.cover,
+            ),
+          ),
+          Center(
+            child: Container(
               width: 400, // Increased width of the contact card
-              child: ContactCard(
-                name: 'Desh Raj',
-                phoneNumber: '+91 90417 56096',
-                email: 'deshraj23raj@gmail.com',
-                imageUrl: './../assets/assets/images/deshraj_sir.png',
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ContactCard(
+                    name: 'Desh Raj',
+                    phoneNumber: '+91 90417 56096',
+                    email: 'deshraj23raj@gmail.com',
+                    imageUrl: './../assets/assets/images/farmer_input.jpg',
+                  ),
+                  SizedBox(height: 20),
+                  ContactCard(
+                    name: 'John Doe',
+                    phoneNumber: '+91 XXXXX XXXXX',
+                    email: 'john.doe@example.com',
+                    imageUrl: './../assets/assets/images/farmer_input.jpg',
+                  ),
+                  SizedBox(height: 20),
+                  ContactCard(
+                    name: 'Amit',
+                    phoneNumber: '+1 987-654-3210',
+                    email: 'alice.smith@example.com',
+                    imageUrl: './../assets/assets/images/farmer_input.jpg',
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -46,10 +70,11 @@ class ContactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
+      width: double.infinity,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color:
+            Color.fromRGBO(255, 255, 255, 0.5), // Set transparent white color
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(

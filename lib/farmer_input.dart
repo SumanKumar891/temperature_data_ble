@@ -216,94 +216,96 @@ class _FarmerInputState extends State<FarmerInput> {
       appBar: AppBar(
         title: Text('Farmer Input'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 5),
-                  TextField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Name',
-                      border: OutlineInputBorder(),
+      body: Container(
+        height: 890,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                './../assets/assets/images/farmer_background.jpg'), // Background image path
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Card(
+            color: Colors.white.withOpacity(0.5),
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 5),
+                    TextField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    controller: _contactNumberController,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      labelText: 'Contact Number',
-                      border: OutlineInputBorder(),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: _contactNumberController,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        labelText: 'Contact Number',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    controller: _locationController,
-                    decoration: InputDecoration(
-                      labelText: 'Location',
-                      border: OutlineInputBorder(),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: _locationController,
+                      decoration: InputDecoration(
+                        labelText: 'Location',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    controller: _problemStatementController,
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                      labelText: 'Problem Statement',
-                      border: OutlineInputBorder(),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: _problemStatementController,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                        labelText: 'Problem Statement',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                      textStyle: TextStyle(fontSize: 18),
-                      primary: Colors.white,
-                      side: BorderSide(color: Colors.red, width: 2.0),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                        textStyle: TextStyle(fontSize: 18),
+                        primary: Colors.white,
+                        side: BorderSide(color: Colors.red, width: 2.0),
+                      ),
+                      onPressed: _selectImage,
+                      child: Text('Select Image'),
                     ),
-                    onPressed: _selectImage,
-                    child: Text('Select Image'),
-                  ),
-                  // SizedBox(height: 10),
-                  // ElevatedButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     backgroundColor: Colors.blue, // background (button) color
-                  //     foregroundColor: Colors.white,
-                  //   ),
-                  //   onPressed: _uploadImage,
-                  //   child: Text('Upload Image (Web)'),
-                  // ),
-                  SizedBox(height: 5),
-                  _imagePath != null
-                      ? Image.network(
-                          _imagePath!,
-                          height: 150,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                      textStyle: TextStyle(fontSize: 18),
-                      primary: Colors.white,
-                      side: BorderSide(color: Colors.red, width: 2.0),
+                    SizedBox(height: 5),
+                    _imagePath != null
+                        ? Image.network(
+                            _imagePath!,
+                            height: 150,
+                            fit: BoxFit.cover,
+                          )
+                        : Container(),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                        textStyle: TextStyle(fontSize: 18),
+                        primary: Colors.white,
+                        side: BorderSide(color: Colors.red, width: 2.0),
+                      ),
+                      onPressed: isLoading ? null : _submitForm,
+                      child: isLoading
+                          ? CircularProgressIndicator()
+                          : Text('Submit'),
                     ),
-                    onPressed: isLoading ? null : _submitForm,
-                    child: isLoading
-                        ? CircularProgressIndicator()
-                        : Text('Submit'),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
