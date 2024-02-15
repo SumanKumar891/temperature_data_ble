@@ -179,70 +179,83 @@ class _WeatherDataState extends State<WeatherData> {
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/weather.png',
-              width: 500,
-              height: 200,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/weather_bg.jpg', // Replace with your background image path
+              fit: BoxFit.cover,
             ),
-            Card(
-              elevation: 5,
-              child: Container(
-                width: screenSize.width * 0.8,
-                height: screenSize.height * 0.6,
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextField(
-                      controller: gatewayIdController,
-                      decoration:
-                          InputDecoration(labelText: 'Enter Gateway ID'),
-                    ),
-                    TextField(
-                      controller: nodeIdController,
-                      decoration: InputDecoration(labelText: 'Enter Node ID'),
-                    ),
-                    TextField(
-                      controller: startTimeController,
-                      decoration:
-                          InputDecoration(labelText: 'Enter Start Date & Time'),
-                      onTap: () => _selectStartDate(context),
-                      readOnly: true,
-                    ),
-                    TextField(
-                      controller: endTimeController,
-                      decoration:
-                          InputDecoration(labelText: 'Enter End Date & Time'),
-                      onTap: () => _selectEndDate(context),
-                      readOnly: true,
-                    ),
-                    SizedBox(height: 16),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: isLoading ? null : fetchData,
-                        child: isLoading
-                            ? CircularProgressIndicator()
-                            : Text('Submit'),
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 16),
-                          textStyle: TextStyle(fontSize: 18),
-                          primary: Colors.white,
-                          side: BorderSide(color: Colors.red, width: 2.0),
-                        ),
-                      ),
-                    ),
-                  ],
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/weather.png',
+                  width: 500,
+                  height: 200,
                 ),
-              ),
+                Card(
+                  elevation: 5,
+                  color: Colors.white
+                      .withOpacity(0.5), // Set semi-transparent white color
+                  child: Container(
+                    width: screenSize.width * 0.8,
+                    height: screenSize.height * 0.6,
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextField(
+                          controller: gatewayIdController,
+                          decoration:
+                              InputDecoration(labelText: 'Enter Gateway ID'),
+                        ),
+                        TextField(
+                          controller: nodeIdController,
+                          decoration:
+                              InputDecoration(labelText: 'Enter Node ID'),
+                        ),
+                        TextField(
+                          controller: startTimeController,
+                          decoration: InputDecoration(
+                              labelText: 'Enter Start Date & Time'),
+                          onTap: () => _selectStartDate(context),
+                          readOnly: true,
+                        ),
+                        TextField(
+                          controller: endTimeController,
+                          decoration: InputDecoration(
+                              labelText: 'Enter End Date & Time'),
+                          onTap: () => _selectEndDate(context),
+                          readOnly: true,
+                        ),
+                        SizedBox(height: 16),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: isLoading ? null : fetchData,
+                            child: isLoading
+                                ? CircularProgressIndicator()
+                                : Text('Submit'),
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 16),
+                              textStyle: TextStyle(fontSize: 18),
+                              primary: Colors.white,
+                              side: BorderSide(color: Colors.red, width: 2.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

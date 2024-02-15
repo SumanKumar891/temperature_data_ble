@@ -151,80 +151,93 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-      body: Center(
-        child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SizedBox(
-              height: 400,
-              width: 300,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      // Icon(Icons.login),
-                      SizedBox(width: 10),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/login_bg.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
+          Center(
+            child: Card(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+              color: Colors.white
+                  .withOpacity(0.6), // Set semi-transparent white color
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
+                  height: 400,
+                  width: 300,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          // Icon(Icons.login),
+                          SizedBox(width: 10),
+                          Text(
+                            'Login',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          // icon: Icon(Icons.email),
+                          labelText: 'Email',
+                          border: OutlineInputBorder(),
+                          errorText: emailValid ? null : 'Invalid email format',
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          // icon: Icon(Icons.password),
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                        ),
+                        obscureText: true,
+                      ),
+                      SizedBox(height: 5),
                       Text(
-                        'Login',
-                        style: TextStyle(fontSize: 24),
+                        errorMessage,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      SizedBox(height: 5),
+                      ElevatedButton(
+                        onPressed: isLoading ? null : _login,
+                        child: isLoading
+                            ? CircularProgressIndicator()
+                            : Text('Login', style: TextStyle(fontSize: 20)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.blue, // background (button) color
+                          foregroundColor: Colors.white,
+                          fixedSize: Size(50, 50),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(30)), // rounded corner
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/signup');
+                        },
+                        child: Text('Don\'t have an account? Sign Up'),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      // icon: Icon(Icons.email),
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
-                      errorText: emailValid ? null : 'Invalid email format',
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  TextField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      // icon: Icon(Icons.password),
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    errorMessage,
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  SizedBox(height: 5),
-                  ElevatedButton(
-                    onPressed: isLoading ? null : _login,
-                    child: isLoading
-                        ? CircularProgressIndicator()
-                        : Text('Login', style: TextStyle(fontSize: 20)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue, // background (button) color
-                      foregroundColor: Colors.white,
-                      fixedSize: Size(50, 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(30)), // rounded corner
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    },
-                    child: Text('Don\'t have an account? Sign Up'),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -345,7 +358,7 @@ class _SignupPageState extends State<SignupPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                './../assets/assets/images/awadh_logo.jpeg', // Change to your logo asset path
+                'assets/images/awadh_logo.jpeg', // Change to your logo asset path
                 width: 40,
                 height: 40,
                 fit: BoxFit.cover,
@@ -371,115 +384,128 @@ class _SignupPageState extends State<SignupPage> {
           ],
         ),
       ),
-      body: Center(
-        child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SizedBox(
-              height: 550,
-              width: 350,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      // Icon(
-                      //   Icons.person_add,
-                      //   size: 32,
-                      //   color: Colors.blue,
-                      // ),
-                      SizedBox(width: 10),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/login_bg.jpg', // Replace with your background image path
+              fit: BoxFit.cover,
+            ),
+          ),
+          Center(
+            child: Card(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              color: Colors.white
+                  .withOpacity(0.6), // Set semi-transparent white color
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
+                  height: 550,
+                  width: 350,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          // Icon(
+                          //   Icons.person_add,
+                          //   size: 32,
+                          //   color: Colors.blue,
+                          // ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Signup',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        controller: firstnameController,
+                        decoration: InputDecoration(
+                          // icon: Icon(Icons.person),
+                          border: OutlineInputBorder(),
+                          labelText: 'First Name',
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: lastnameController,
+                        decoration: InputDecoration(
+                          // icon: Icon(Icons.person),
+                          border: OutlineInputBorder(),
+                          labelText: 'Last Name',
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          // icon: Icon(Icons.email),
+                          border: OutlineInputBorder(),
+                          labelText: 'Email',
+                          errorText: emailValid ? null : 'Invalid email format',
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          // icon: Icon(Icons.password),
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                          errorText: passwordValid
+                              ? null
+                              : 'Password should be at least 8 characters long',
+                        ),
+                        obscureText: true,
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: confirmPasswordController,
+                        decoration: InputDecoration(
+                          // icon: Icon(Icons.password),
+                          border: OutlineInputBorder(),
+                          labelText: 'Confirm Password',
+                        ),
+                        obscureText: true,
+                      ),
+                      SizedBox(height: 5),
                       Text(
-                        'Signup',
-                        style: TextStyle(fontSize: 24),
+                        errorMessage,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      SizedBox(height: 5),
+                      ElevatedButton(
+                        onPressed: isLoading ? null : _signup,
+                        child: isLoading
+                            ? CircularProgressIndicator()
+                            : Text('Sign Up', style: TextStyle(fontSize: 20)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.blue, // background (button) color
+                          foregroundColor: Colors.white,
+                          fixedSize: Size(50, 50),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(30)), // rounded corner
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Already have an account? Login'),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  TextField(
-                    controller: firstnameController,
-                    decoration: InputDecoration(
-                      // icon: Icon(Icons.person),
-                      border: OutlineInputBorder(),
-                      labelText: 'First Name',
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    controller: lastnameController,
-                    decoration: InputDecoration(
-                      // icon: Icon(Icons.person),
-                      border: OutlineInputBorder(),
-                      labelText: 'Last Name',
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      // icon: Icon(Icons.email),
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      errorText: emailValid ? null : 'Invalid email format',
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      // icon: Icon(Icons.password),
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      errorText: passwordValid
-                          ? null
-                          : 'Password should be at least 8 characters long',
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 10),
-                  TextField(
-                    controller: confirmPasswordController,
-                    decoration: InputDecoration(
-                      // icon: Icon(Icons.password),
-                      border: OutlineInputBorder(),
-                      labelText: 'Confirm Password',
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    errorMessage,
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  SizedBox(height: 5),
-                  ElevatedButton(
-                    onPressed: isLoading ? null : _signup,
-                    child: isLoading
-                        ? CircularProgressIndicator()
-                        : Text('Sign Up', style: TextStyle(fontSize: 20)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue, // background (button) color
-                      foregroundColor: Colors.white,
-                      fixedSize: Size(50, 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(30)), // rounded corner
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('Already have an account? Login'),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
